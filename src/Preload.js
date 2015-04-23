@@ -11,6 +11,8 @@ Business.Preload.prototype = {
 		this.load.setPreloadSprite(this.preloadBar);
 		this.load.tilemap('map', 'assets/tilemaps/homephaser2.json', null, Phaser.Tilemap.TILED_JSON);
     	this.load.tilemap('game2map', 'assets/tilemaps/oneclickmini.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.tilemap('scene2', 'assets/tilemaps/scene2.json', null, Phaser.Tilemap.TILED_JSON);
+		
 		// load images
 		this.load.image('sky', 'assets/sky.png');
         this.load.image('ground', 'assets/platform.png');
@@ -18,12 +20,12 @@ Business.Preload.prototype = {
         this.load.image('pokemontileset', 'assets/tilemaps/pokemontileset.png');
     	this.load.image('masstileset', 'assets/tilemaps/masstileset.png');
     	this.load.image('phaser', 'assets/phaser-dude.png');
-<<<<<<< HEAD
+
 		this.load.image('deadly', "assets/madoff.png");
 		this.load.image('arrow', "assets/arrow.png");
 		this.load.image('gymset', 'assets/tilemaps/gymset.png');
 		this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-=======
+
 
         this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
@@ -40,7 +42,7 @@ Business.Preload.prototype = {
 	    this.load.image('tipsheet', 'assets/tipsheet.png');
 	    this.load.image('moneyBar', 'assets/moneyBar.png');
 	    this.load.image('happyBar', 'assets/happyBar.png');
->>>>>>> abb9276744f3c4adccaeb86ca32ef6d2eb96797c
+
         
 	},
 	create: function(){

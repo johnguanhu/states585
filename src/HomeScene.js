@@ -47,7 +47,7 @@ Business.HomeScene.prototype = {
     create: function(){  //    tipword=this.add.text(tips.x, tips.y , "Tips go here");
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-        this.map = this.add.tilemap('map');
+        this.map = this.add.tilemap('scene2');
 
         this.map.addTilesetImage('masstileset');
         this.map.addTilesetImage('pokemontileset');
@@ -64,10 +64,13 @@ Business.HomeScene.prototype = {
         this.telephone= this.add.sprite(210,100, 'telephone')
         this.telephone.scale.setTo(0.04,0.04);
 
-        this.sprite = this.add.sprite(130, 150, 'phaser');
-        this.sprite.scale.setTo(0.75,0.75);
+        this.sprite = this.add.sprite(130, 150, 'dude');
+        this.sprite.scale.setTo(0.8,0.8);
 
         this.physics.enable(this.sprite);
+        this.sprite.animations.add('left', [0, 1, 2, 3], 10, true);
+        this.sprite.animations.add('right', [5, 6, 7, 8], 10, true);
+
         this.physics.enable(this.telephone)
         this.camera.follow(this.sprite);
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -512,10 +515,16 @@ Business.HomeScene.prototype = {
         if (this.cursors.left.isDown)
         {
             this.sprite.body.velocity.x = -200;
+            this.sprite.animations.play('left');
         }
         else if (this.cursors.right.isDown)
         {
             this.sprite.body.velocity.x = 200;
+            this.sprite.animations.play('right');
+        }
+        else {
+            this.sprite.animations.stop();
+
         }
 
 

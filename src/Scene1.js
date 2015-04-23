@@ -58,6 +58,9 @@ Business.Scene1.prototype = {
 
 	checkCollision2: function(player, portal){
 		if(confirm("Do you want to save more money?"));
+		this.layer1.destroy();
+		this.layer2.destroy();
+		this.layer3.destroy();
 		this.state.start('HomeScene');
 	},
 
