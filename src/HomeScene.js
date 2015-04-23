@@ -1,3 +1,44 @@
+var map= null;
+var layer1= null;
+var layer2= null;
+var layer3= null;
+var cursors= null;
+var sprite= null;
+var line= null;
+var dial= null;
+var agent_name= null;
+var dialTable= null;
+var storage= null;
+var moneybar= null;
+var happybar= null;
+var tileHits = null;
+var plotting = false;
+var index=null;
+var dialogBool=false;
+var wantsToCall=false;
+var player_name = null;
+var boolean_clicked=false;
+var phoneBool=false;
+var reminded=false;
+var moneyReader=null;
+var happiness=0;
+var money=0;
+var happyReader=null;
+var moneyimg=null;
+var moneylab=null;
+var happyimg=null;
+var happylab=null;
+var a=   null;
+var a1=  null;
+var b=  null;
+var b1=  null;
+var c=  null; 
+var c1= null;
+var d=   null;
+var d1= null;
+var choicetoggle=false;
+
+
 Business.HomeScene= function(game){
 this.map= null;
 this.layer1= null;
@@ -39,6 +80,7 @@ this.d=   null;
 this.d1= null;
 this.choicetoggle=false;
 
+
 }
 
 
@@ -75,6 +117,9 @@ Business.HomeScene.prototype = {
         this.camera.follow(this.sprite);
         this.cursors = this.input.keyboard.createCursorKeys();
 
+
+
+
         this.moneyimg=this.add.sprite(10,50, 'money');
         this.moneylab=this.add.text(60,50,'err');
         this.happyimg=this.add.sprite(10,100,'happy');
@@ -84,6 +129,20 @@ Business.HomeScene.prototype = {
         this.happyimg.visible=false;
         this.happylab.visible=false;
 
+        a=   this.add.text(100,40,' ');
+        a1=  this.add.button(40,40,'box');
+        b=   this.add.text(100,80,' ');
+        b1=  this.add.button(40,80,'box');
+        c=   this.add.text(100,120,' ');
+        c1=  this.add.button(40,120,'box');
+        d=   this.add.text(100,160,' ');
+        d1=  this.add.button(40,160,'box');
+        a1.visible=false;
+        b1.visible=false;
+        c1.visible=false;
+        d1.visible=false;
+
+
 
         this.setUpMoney();
         this.setUpPause();
@@ -91,6 +150,7 @@ Business.HomeScene.prototype = {
         setInterval(this.phonecall(), 10000);
 
 
+       
 
         this.telephone.enableBody = true;
         this.telephone.body.immovable=true;
@@ -198,6 +258,12 @@ Business.HomeScene.prototype = {
              else if (dial[index][0]=="Choice") {
                     console.log("log");
                     next.kill();
+                    agentbox.visible=false
+                    agentname.visible=false;
+                    playerbox.visible=false;
+                    playername.visible=false;
+                    playerquote.visible = false;
+                    agentquote.visible=false;
                     Business.HomeScene.prototype.decisionPoint(dial, index);
             }
             
@@ -213,17 +279,15 @@ Business.HomeScene.prototype = {
             index=index+1;
 
 
-          //if hit end destroy all of the parts and run endDialog() 
-    //THIS IS BUGGY DOES NOT ACTUALLY DESTROY NEXT
-    // well it probably destroys A next, just not all of the nexts
-    //well, I fixed it, but I don't know why that fix worked
+              //if hit end destroy all of the parts and run endDialog() 
+        //THIS IS BUGGY DOES NOT ACTUALLY DESTROY NEXT
+        // well it probably destroys A next, just not all of the nexts
+        //well, I fixed it, but I don't know why that fix worked
 
         });
         dialogBool=true;
     },
-
-
-    dialogSelecter: function (hap, mon){
+ dialogSelecter: function (hap, mon){
         happ=hap;
         mone=mon;
         if (happ>9){
@@ -232,7 +296,7 @@ Business.HomeScene.prototype = {
         if (mone>9){
             mone=9;
         }
-    //you can have up to four dialogs
+        //you can have up to four dialogs
         var x=Math.floor(happ/5);
         var y=Math.floor(mone/5);
 
@@ -252,63 +316,69 @@ Business.HomeScene.prototype = {
         var   n4=    "Player";
         var   l4=    "Oh, right. Yeah.";
 
-    //example choices - you can saw whatever you want
-    //as it stands, needs to be 4 choice options as it will make 4 options
-    //if you click second box, it will jump to next instance of "2" in dialogue where 2 is in name slot
-    //Then you push to next spot in array (obviously don't print 2/void) and then continues
-    //end tag will cause dialogue to end.
-     //if you want to increase money or happiness in dialogue, if the name of the speaker is money & text is a number, it shoudl increment or decrement happiness by specific amount.
+        //example choices - you can saw whatever you want
+        //as it stands, needs to be 4 choice options as it will make 4 options
+        //if you click second box, it will jump to next instance of "2" in dialogue where 2 is in name slot
+        //Then you push to next spot in array (obviously don't print 2/void) and then continues
+        //end tag will cause dialogue to end.
+         //if you want to increase money or happiness in dialogue, if the name of the speaker is money & text is a number, it shoudl increment or decrement happiness by specific amount.
 
-     var   n5=     "Choice";
-     var   l5=     "1";
+        var   n5=     "Choice";
+        var   l5=     "1";
 
-     var   n6=     "Choice";
-     var   l6=     "2";
+        var   n6=     "Choice";
+        var   l6=     "2";
 
-     var   n7=     "Choice";
-     var   l7=     "3";
+        var   n7=     "Choice";
+        var   l7=     "3";
 
-     var   n8=     "Choice";
-     var   l8=     "4";
+        var   n8=     "Choice";
+        var   l8=     "4";
 
-     var   n9=       "2";
-     var   l9=       "void";
+        var   n9=       "2";
+        var   l9=       "void";
 
-     var   n10=     "Player";
-     var   l10=     "You picked 2";
+        var   n10=     "Player";
+        var   l10=     "You picked 2";
 
 
-     var   n11=     "";
-     var   l11=      "";
+        var   n11=     "";
+        var   l11=      "";
 
-     var   n12=     "end";
-     var   l12=      "Shouldn't matter";
-     var dial=[[n1,l1],[n2,l2],[n3,l3],[n4,l4],[n5,l5],[n6,l6],[n7,l7],[n8,l8],[n9,l9],[n10,l10],[n11,l11],[n12,l12]];
-    //end workaround
+        var   n12=     "end";
+        var   l12=      "Shouldn't matter";
+        var dial=[[n1,l1],[n2,l2],[n3,l3],[n4,l4],[n5,l5],[n6,l6],[n7,l7],[n8,l8],[n9,l9],[n10,l10],[n11,l11],[n12,l12]];
+        //end workaround
 
-    //these are clearly placeholders for actual dialog
-    var dial00= dial; 
-    var dial01= dial;
-    var dial10= dial;
-    var dial11= dial;
-    dialTable=[[dial00,dial01],[dial10,dial11]];
+        //these are clearly placeholders for actual dialog
+        var dial00= dial; 
+        var dial01= dial;
+        var dial10= dial;
+        var dial11= dial;
+        dialTable=[[dial00,dial01],[dial10,dial11]];
     },
 
-    decisionPoint: function ( diag, index){
-        index=index+1;
+    decisionPoint: function (diag, index){
+
     //make the parts, long, but couldn't get groups to handle this correctly, will come back to it
-         this.a=   this.add.text(100,40,diag[index-1][1]);
-         this.a1=  this.add.button(40,40,'box');
-         this.b=   this.add.text(100,80,diag[index+0][1]);
-         this.b1=  this.add.button(40,80,'box');
-         this.c=   this.add.text(100,120,diag[index+1][1]);
-         this.c1=  this.add.button(40,120,'box');
-         this.d=   this.add.text(100,160,diag[index+2][1]);
-         this.d1=  this.add.button(40,160,'box');
-        this.a1.inputEnabled=true;
-        this.b1.inputEnabled=true;
-        this.c1.inputEnabled=true;
-        this.d1.inputEnabled=true;
+
+
+
+        a.text=diag[index][1];
+        b.text= diag[index+1][1];
+        c.text= diag[index+2][1];
+        d.text= diag[index+3][1];
+
+
+        a1.visible=true;
+        b1.visible=true;
+        c1.visible=true;
+        d1.visible=true;
+
+        a1.inputEnabled=true;
+        b1.inputEnabled=true;
+        c1.inputEnabled=true;
+        d1.inputEnabled=true;
         var choice=[a,b,c,d];
 
         var stor=0;
@@ -323,7 +393,7 @@ Business.HomeScene.prototype = {
             b1.destroy();
             c1.destroy();
             d1.destroy();
-            clearAndJump(diag,1,index,choice);
+            Business.HomeScene.prototype.clearAndJump(diag,1,index,choice);
         });
         b1.onInputDown.add(function(){
 
@@ -335,7 +405,7 @@ Business.HomeScene.prototype = {
             b1.destroy();
             c1.destroy();
             d1.destroy();
-            clearAndJump(diag,2,index,choice);
+            Business.HomeScene.prototype.clearAndJump(diag,2,index,choice);
         });
         c1.onInputDown.add(function(){
 
@@ -347,7 +417,7 @@ Business.HomeScene.prototype = {
             b1.destroy();
             c1.destroy();
             d1.destroy();
-            clearAndJump(diag,3,index,choice);
+            Business.HomeScene.prototype.clearAndJump(diag,3,index,choice);
         });    
         d1.onInputDown.add(function(){
 
@@ -359,7 +429,7 @@ Business.HomeScene.prototype = {
             b1.destroy();
             c1.destroy();
             d1.destroy();
-            clearAndJump(diag,4,index,choice);
+            Business.HomeScene.prototype.clearAndJump(diag,4,index,choice);
         });
     },
 
@@ -375,16 +445,16 @@ Business.HomeScene.prototype = {
         }
         if (storage==-1){
             alert("There was no further dialog for that option");
-            endDialog();
+            this.endDialog();
         }
         else{
-           dialog(dial, storage);
+           Business.HomeScene.prototype.dialog(dial, storage);
         }
     },
 
     endDialog: function (){
        // dialogBool=false;
-       this.stage.backgroundColor = '#000000';  
+       Business.HomeScene.prototype.create.stage.backgroundColor = '#000000';  
        return;
     },
 
