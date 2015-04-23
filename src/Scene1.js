@@ -7,6 +7,7 @@ Business.Scene1 = function(game){
 	this.cursors = null;
 	this.player = null;	
 	this.portal = null;
+	this.homePortal = null;
 };
 
 Business.Scene1.prototype = {
@@ -42,18 +43,29 @@ Business.Scene1.prototype = {
     this.portal.enableBody = true;
     this.physics.enable(this.portal);
 
+    this.homePortal = this.add.sprite(200,200, 'star');
+    this.homePortal.scale.setTo(0.5,0.5);
+    this.homePortal.enableBody = true;
+    this.physics.enable(this.homePortal);
+
     this.cursors = this.input.keyboard.createCursorKeys();
 	},
 
-	checkCollision: function(player, portal){
+	checkCollision1: function(player, portal){
 		if(confirm("Do you want to save more money?"));
 		this.state.start('Game');
+	},
+
+	checkCollision2: function(player, portal){
+		if(confirm("Do you want to save more money?"));
+		this.state.start('HomeScene');
 	},
 
 	update: function(){
 	this.physics.arcade.collide(this.player, this.layer2);
 	
-	this.physics.arcade.collide(this.player, this.portal, this.checkCollision, null, this);
+	this.physics.arcade.overlap(this.player, this.portal, this.checkCollision1, null, this);
+	this.physics.arcade.overlap(this.player, this.homePortal, this.checkCollision2, null, this);
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -69,7 +81,6 @@ Business.Scene1.prototype = {
 	        this.player.body.velocity.y = 200;
 	        this.player.animations.stop();
 	        this.player.frame = 4;
-	        this.openMiniGame1;
 	    }
 
 	    if (this.cursors.left.isDown)
