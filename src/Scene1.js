@@ -46,6 +46,7 @@ Business.Scene1.prototype = {
 	},
 
 	checkCollision: function(player, portal){
+		if(confirm("Do you want to save more money?"));
 		this.state.start('Game');
 	},
 

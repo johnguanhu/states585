@@ -11,6 +11,7 @@ Business.Game2 = function(game){
     this.deadlyArray = []; // an array which will be filled with enemies
     this.thisOver = false; // flag to know if the this is over
     this.map;
+    this.deadly;
     this.layer1;
 
 	// these settings can be modified to change thisplay
@@ -32,6 +33,11 @@ Business.Game2.prototype = {
 	this.layer1 = this.map.createLayer('backgroundLayer');
 	this.layer1.resizeWorld();
 
+	this.scale.pageAlignHorizontally = true;
+	this.scale.pageAlignVertically = true;
+	this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.scale.setScreenSize();
+
 	this.ball = this.add.sprite(this.world.centerX,this.world.centerY,'phaser');
 	this.ball.anchor.x = 0.5;
 	this.ball.anchor.y = 0.5;
@@ -48,7 +54,12 @@ Business.Game2.prototype = {
 	
 	//this.placeDeadly();
 
-	this.coin = this.add.sprite(Math.random()*400+40,Math.random()*240+40,'star');
+	this.deadly = this.add.sprite(Math.random()*700+40,Math.random()*500+70,'deadly');
+	this.deadly.scale.setTo(0.3,0.3);
+	this.deadly.anchor.x = 0.5;
+	this.deadly.anchor.y = 0.5;
+
+	this.coin = this.add.sprite(Math.random()*700+40,Math.random()*500+70,'star');
 	this.coin.scale.setTo(0.6,0.6);
 	this.coin.anchor.x = 0.5;
 	this.coin.anchor.y = 0.5;
@@ -69,7 +80,7 @@ Business.Game2.prototype = {
 
 	},
 
-	/*placeDeadly: function(){
+	placeDeadly: function(){
 		// first, create the enemy and set its anchor point in the center
 		var deadly = this.add.sprite(0,0,'deadly');
 		deadly.scale.setTo(0.2,0.2);
@@ -105,7 +116,7 @@ Business.Game2.prototype = {
 		return false;
 	},
 
-	placeCoin: function(){
+	/*placeCoin: function(){
 		// assign the this.coin a random position until such position is legal
 		do{
 			this.coin.x=Math.random()*(this.width-2*this.ballRadius)+this.ballRadius;

@@ -22,7 +22,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/..\/Users\/john\/Downloads\/gymset.png",
+         "image":"gymset.png",
          "imageheight":10000,
          "imagewidth":128,
          "margin":0,
