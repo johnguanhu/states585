@@ -83,5 +83,9 @@ Business.Scene1.prototype = {
 	        this.player.animations.play('right');
 
 	    }
+	    else {
+	   		this.player.animations.stop();
+
+	    }
 	}
 };
