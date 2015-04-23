@@ -7,6 +7,7 @@ Business.Scene1 = function(game){
 	this.cursors = null;
 	this.player = null;	
 	this.portal = null;
+	this.portal2= null;
 };
 
 Business.Scene1.prototype = {
@@ -43,6 +44,11 @@ Business.Scene1.prototype = {
     this.portal.scale.setTo(0.5,0.5);
     this.portal.enableBody = true;
 
+    this.portal2 = this.add.group;
+    this.portal2 = this.add.sprite(200,250, 'star');
+    this.portal2.scale.setTo(0.5,0.5);
+    this.portal2.enableBody = true;
+
     this.cursors = this.input.keyboard.createCursorKeys();
 	},
 
@@ -52,6 +58,12 @@ Business.Scene1.prototype = {
     	this.layer2.destroy();
     	this.layer3.destroy();
     	this.state.start('HomeScene');
+    }
+    if  (190<this.player.x & this.player.x<210 & 240<this.player.y & this.player.y<260){
+    	this.layer1.destroy();
+    	this.layer2.destroy();
+    	this.layer3.destroy();
+    	this.state.start('Game');
     }
 	this.physics.arcade.collide(this.player, this.layer2);
 	
