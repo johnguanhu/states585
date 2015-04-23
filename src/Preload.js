@@ -38,6 +38,6 @@ Business.Preload.prototype = {
 	},
 	create: function(){
 		// start the MainMenu state
-		this.state.start('HomeScene');
+		this.state.start('Scene1');
 	}
 };
