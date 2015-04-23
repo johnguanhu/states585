@@ -7,7 +7,7 @@ Business.Scene1 = function(game){
 	this.cursors = null;
 	this.player = null;	
 	this.portal = null;
-	this.portal2= null;
+	this.homePortal = null;
 };
 
 Business.Scene1.prototype = {
@@ -31,7 +31,6 @@ Business.Scene1.prototype = {
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player);
-    this.player.inputEnabled = true;
     this.player.animations.add('left', [0, 1, 2, 3], 10, true);
     this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
@@ -39,41 +38,34 @@ Business.Scene1.prototype = {
     this.physics.enable(this.player);
     this.camera.follow(this.player);
 
-    this.portal = this.add.group;
     this.portal = this.add.sprite(450,120, 'star');
     this.portal.scale.setTo(0.5,0.5);
     this.portal.enableBody = true;
+    this.physics.enable(this.portal);
 
-    this.portal2 = this.add.group;
-    this.portal2 = this.add.sprite(200,250, 'star');
-    this.portal2.scale.setTo(0.5,0.5);
-    this.portal2.enableBody = true;
+    this.homePortal = this.add.sprite(200,200, 'star');
+    this.homePortal.scale.setTo(0.5,0.5);
+    this.homePortal.enableBody = true;
+    this.physics.enable(this.homePortal);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 	},
 
+	checkCollision1: function(player, portal){
+		if(confirm("Do you want to save more money?"));
+		this.state.start('Game');
+	},
+
+	checkCollision2: function(player, portal){
+		if(confirm("Do you want to save more money?"));
+		this.state.start('HomeScene');
+	},
+
 	update: function(){
-	if  (445<this.player.x & this.player.x<455 & 115<this.player.y & this.player.y<125){
-    	this.layer1.destroy();
-    	this.layer2.destroy();
-    	this.layer3.destroy();
-    	this.state.start('HomeScene');
-    }
-    if  (190<this.player.x & this.player.x<210 & 240<this.player.y & this.player.y<260){
-    	this.layer1.destroy();
-    	this.layer2.destroy();
-    	this.layer3.destroy();
-    	this.state.start('Game');
-    }
 	this.physics.arcade.collide(this.player, this.layer2);
 	
-	this.physics.arcade.overlap(this.player, this.portal, this.checkCollision, null, this);
-
-
-	//this.physics.arcade.collide(this.player, layer2);
-	//this.physics.arcade.collide(this.player, layer3);
-
-
+	this.physics.arcade.overlap(this.player, this.portal, this.checkCollision1, null, this);
+	this.physics.arcade.overlap(this.player, this.homePortal, this.checkCollision2, null, this);
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -89,7 +81,6 @@ Business.Scene1.prototype = {
 	        this.player.body.velocity.y = 200;
 	        this.player.animations.stop();
 	        this.player.frame = 4;
-	        this.openMiniGame1;
 	    }
 
 	    if (this.cursors.left.isDown)
@@ -103,23 +94,9 @@ Business.Scene1.prototype = {
 	        this.player.animations.play('right');
 
 	    }
-	    //becuase the constant walking was really bothering me-
 	    else {
 	   		this.player.animations.stop();
 
 	    }
-	},
-
-
-
-	collisionHandler: function (obj1, obj2) {
-		this.state.start('HomeScene');
 	}
-	
-
-
-
-//	collisionHandler: function(player, portal){
-//		this.state.start('Game');
-//	}
 };
