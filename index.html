@@ -8,7 +8,9 @@
 	<script src="src/Boot.js"></script>
 	<script src="src/Preload.js"></script>
 	<script src="src/Game.js"></script>
+	<script src="src/HomeScene.js"></script>
 	<script src="src/Scene1.js"></script>
+
 </head>
 <body>
 <script>
@@ -20,6 +22,7 @@
 	game.state.add('Preload', Business.Preload);
 	game.state.add('Scene1', Business.Scene1);
 	game.state.add('Game', Business.Game);
+	game.state.add('HomeScene', Business.HomeScene);
 	// start the Boot state
 	game.state.start('Boot');
 })();

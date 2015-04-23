@@ -47,9 +47,18 @@ Business.Scene1.prototype = {
 	},
 
 	update: function(){
+	if  (445<this.player.x & this.player.x<455 & 115<this.player.y & this.player.y<125){
+    	this.state.start('Game');
+    }
 	this.physics.arcade.collide(this.player, this.layer2);
 	
 	this.physics.arcade.overlap(this.player, this.portal, this.checkCollision, null, this);
+
+
+	//this.physics.arcade.collide(this.player, layer2);
+	//this.physics.arcade.collide(this.player, layer3);
+
+
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -79,9 +88,23 @@ Business.Scene1.prototype = {
 	        this.player.animations.play('right');
 
 	    }
+	    //becuase the constant walking was really bothering me-
+	    else {
+	   		this.player.animations.stop();
+
+	    }
 	},
 
-	checkCollision: function(player, portal){
-		this.state.start('Game');
+
+
+	collisionHandler: function (obj1, obj2) {
+		this.state.start('HomeScene');
 	}
+	
+
+
+
+//	collisionHandler: function(player, portal){
+//		this.state.start('Game');
+//	}
 };
