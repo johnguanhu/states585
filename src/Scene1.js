@@ -30,7 +30,6 @@ Business.Scene1.prototype = {
 
     //  We need to enable physics on the player
     this.physics.arcade.enable(this.player);
-    this.player.inputEnabled = true;
     this.player.animations.add('left', [0, 1, 2, 3], 10, true);
     this.player.animations.add('right', [5, 6, 7, 8], 10, true);
 
@@ -38,18 +37,22 @@ Business.Scene1.prototype = {
     this.physics.enable(this.player);
     this.camera.follow(this.player);
 
-    this.portal = this.add.group;
     this.portal = this.add.sprite(450,120, 'star');
     this.portal.scale.setTo(0.5,0.5);
     this.portal.enableBody = true;
+    this.physics.enable(this.portal);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+	},
+
+	checkCollision: function(player, portal){
+		this.state.start('Game');
 	},
 
 	update: function(){
 	this.physics.arcade.collide(this.player, this.layer2);
 	
-	this.physics.arcade.overlap(this.player, this.portal, this.checkCollision, null, this);
+	this.physics.arcade.collide(this.player, this.portal, this.checkCollision, null, this);
 
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
@@ -79,9 +82,5 @@ Business.Scene1.prototype = {
 	        this.player.animations.play('right');
 
 	    }
-	},
-
-	checkCollision: function(player, portal){
-		this.state.start('Game');
 	}
 };

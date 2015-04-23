@@ -10,7 +10,7 @@ Business.Preload.prototype = {
 		this.preloadBar = this.add.sprite((Business.GAME_WIDTH-311)/2, (Business.GAME_HEIGHT-27)/2, 'preloaderBar');
 		this.load.setPreloadSprite(this.preloadBar);
 		this.load.tilemap('map', 'assets/tilemaps/homephaser2.json', null, Phaser.Tilemap.TILED_JSON);
-    
+    	this.load.tilemap('game2map', 'assets/tilemaps/oneclickmini.json', null, Phaser.Tilemap.TILED_JSON);
 		// load images
 		this.load.image('sky', 'assets/sky.png');
         this.load.image('ground', 'assets/platform.png');
@@ -18,8 +18,10 @@ Business.Preload.prototype = {
         this.load.image('pokemontileset', 'assets/tilemaps/pokemontileset.png');
     	this.load.image('masstileset', 'assets/tilemaps/masstileset.png');
     	this.load.image('phaser', 'assets/phaser-dude.png');
-
-        this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+		this.load.image('deadly', "assets/madoff.png");
+		this.load.image('arrow', "assets/arrow.png");
+		this.load.image('gymset', 'assets/tilemaps/gymset.png');
+		this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         
 	},
 	create: function(){
