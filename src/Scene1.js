@@ -48,7 +48,10 @@ Business.Scene1.prototype = {
 
 	update: function(){
 	if  (445<this.player.x & this.player.x<455 & 115<this.player.y & this.player.y<125){
-    	this.state.start('Game');
+    	this.layer1.destroy();
+    	this.layer2.destroy();
+    	this.layer3.destroy();
+    	this.state.start('HomeScene');
     }
 	this.physics.arcade.collide(this.player, this.layer2);
 	

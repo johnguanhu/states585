@@ -32,12 +32,12 @@ Business.Preload.prototype = {
 	    this.load.image('rectangle3', 'assets/tangle3.png');
 	    this.load.image('wallet', 'assets/wallet.png');
 	    this.load.image('tipsheet', 'assets/tipsheet.png');
-	    this.load.image('moneyBar', 'moneyBar.png');
-	    this.load.image('happyBar', 'happyBar.png');
+	    this.load.image('moneyBar', 'assets/moneyBar.png');
+	    this.load.image('happyBar', 'assets/happyBar.png');
         
 	},
 	create: function(){
 		// start the MainMenu state
-		this.state.start('Scene1');
+		this.state.start('HomeScene');
 	}
 };

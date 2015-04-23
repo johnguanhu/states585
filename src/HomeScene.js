@@ -13,39 +13,107 @@ this.storage= null;
 this.moneybar= null;
 this.happybar= null;
 this.tileHits = null;
-this.plotting = null;
+this.plotting = false;
 this.index=null;
-this.dialogBool=null;
-this.wantsToCall=null;
-this.player_name = null
-this.boolean_clicked=null;
-this.phoneBool=null;
-this.reminded=null;
+this.dialogBool=false;
+this.wantsToCall=false;
+this.player_name = null;
+this.boolean_clicked=false;
+this.phoneBool=false;
+this.reminded=false;
 this.moneyReader=null;
-this.happiness=null;
-this.money=null;
+this.happiness=0;
+this.money=0;
 this.happyReader=null;
+this.moneyimg=null;
+this.moneylab=null;
+this.happyimg=null;
+this.happylab=null;
+this.a=   null;
+this.a1=  null;
+this.b=  null;
+this.b1=  null;
+this.c=  null; 
+this.c1= null;
+this.d=   null;
+this.d1= null;
+this.choicetoggle=false;
+
 }
 
 
 Business.HomeScene.prototype = {
-}/*
-    create: function(){  //    tipword=this.add.text(tips.x, tips.y , "Tips go here");
-    //tips.scale.setTo(0.75,0.75);
-    //tips.visible=false;
-    //    tipword.visible=false;
 
-    BusinessTips.onInputDown.add(function(){
-        if (boolean_clicked){
-            //    tipword.visible=false;
-            tips.visible=false;
-            boolean_clicked=false;
-        }
-        else {
-             //   tipword.visible=true;
-             tips.visible=true;
-             boolean_clicked=true}
-         })
+    create: function(){  //    tipword=this.add.text(tips.x, tips.y , "Tips go here");
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.map = this.add.tilemap('map');
+
+        this.map.addTilesetImage('masstileset');
+        this.map.addTilesetImage('pokemontileset');
+        this.map.addTilesetImage('gymset');
+
+        this.layer1 = this.map.createLayer('backgroundLayer');
+        this.layer2 = this.map.createLayer('blockedLayer');
+
+        this.layer1.resizeWorld();
+
+        this.map.setCollisionBetween(1, 100000, true, this.layer2);
+
+        this.layer1.debug = true;
+        this.telephone= this.add.sprite(210,100, 'telephone')
+        this.telephone.scale.setTo(0.04,0.04);
+
+        this.sprite = this.add.sprite(130, 150, 'phaser');
+        this.sprite.scale.setTo(0.75,0.75);
+
+        this.physics.enable(this.sprite);
+        this.physics.enable(this.telephone)
+        this.camera.follow(this.sprite);
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.moneyimg=this.add.sprite(10,50, 'money');
+        this.moneylab=this.add.text(60,50,'err');
+        this.happyimg=this.add.sprite(10,100,'happy');
+        this.happylab=this.add.text(60,100,'err');
+        this.moneyimg.visible=false;
+        this.moneylab.visible=false;
+        this.happyimg.visible=false;
+        this.happylab.visible=false;
+
+
+        this.setUpMoney();
+        this.setUpPause();
+        this.fillDialogueTable();
+        setInterval(this.phonecall(), 10000);
+
+
+
+        this.telephone.enableBody = true;
+        this.telephone.body.immovable=true;
+
+        this.agent_name= prompt("What is the your name");
+
+        var BusinessTips = this.add.button(400,310, "wallet"); 
+        BusinessTips.scale.setTo(.3,.3);
+        BusinessTips.inputEnabled=true;
+        tips = this.add.sprite(200, 200, 'tipsheet');
+    //    tipword=this.add.text(tips.x, tips.y , "Tips go here");
+        tips.scale.setTo(0.75,0.75);
+        tips.visible=false;
+        //    tipword.visible=false;
+
+        BusinessTips.onInputDown.add(function(){
+            if (this.boolean_clicked){
+                //    tipword.visible=false;
+                this.tips.visible=false;
+                this.boolean_clicked=false;
+            }
+            else {
+                 //   tipword.visible=true;
+                 this.tips.visible=true;
+                 this.boolean_clicked=true}
+             });
 
         //on click move through the dialog
     },
@@ -103,13 +171,13 @@ Business.HomeScene.prototype = {
             if (dial[index][0]=="happy"){
                 happyReader=parseInt(dial[index][1]);
                 happiness=happiness+happyReader;
-                dialog(dial,index+1);
+                this.dialog(dial,index+1);
             }
 
             if (dial[index][0]=="money"){
                 moneyReader=parseInt(dial[index][1]);
                 money=money+moneyReader;
-                dialog(dial, index+1);
+                this.dialog(dial, index+1);
             }
 
             if (dial[index][0]=="end") {
@@ -121,13 +189,13 @@ Business.HomeScene.prototype = {
                     playerquote.visible = false;
                     agentquote.visible=false;
                     next.destroy();
-                    endDialog();
+                    this.endDialog();
             }
 
              else if (dial[index][0]=="Choice") {
                     console.log("log");
                     next.kill();
-                    decisionPoint(dial, index);
+                    Business.HomeScene.prototype.decisionPoint(dial, index);
             }
             
             else if (index%2==0){ 
@@ -226,18 +294,18 @@ Business.HomeScene.prototype = {
     decisionPoint: function ( diag, index){
         index=index+1;
     //make the parts, long, but couldn't get groups to handle this correctly, will come back to it
-        var a=   this.add.text(100,40,diag[index-1][1]);
-        var a1=  this.add.button(40,40,'box');
-        var b=   this.add.text(100,80,diag[index+0][1]);
-        var b1=  this.add.button(40,80,'box');
-        var c=   this.add.text(100,120,diag[index+1][1]);
-        var c1=  this.add.button(40,120,'box');
-        var d=   this.add.text(100,160,diag[index+2][1]);
-        var d1=  this.add.button(40,160,'box');
-        a1.inputEnabled=true;
-        b1.inputEnabled=true;
-        c1.inputEnabled=true;
-        d1.inputEnabled=true;
+         this.a=   this.add.text(100,40,diag[index-1][1]);
+         this.a1=  this.add.button(40,40,'box');
+         this.b=   this.add.text(100,80,diag[index+0][1]);
+         this.b1=  this.add.button(40,80,'box');
+         this.c=   this.add.text(100,120,diag[index+1][1]);
+         this.c1=  this.add.button(40,120,'box');
+         this.d=   this.add.text(100,160,diag[index+2][1]);
+         this.d1=  this.add.button(40,160,'box');
+        this.a1.inputEnabled=true;
+        this.b1.inputEnabled=true;
+        this.c1.inputEnabled=true;
+        this.d1.inputEnabled=true;
         var choice=[a,b,c,d];
 
         var stor=0;
@@ -316,10 +384,8 @@ Business.HomeScene.prototype = {
        this.stage.backgroundColor = '#000000';  
        return;
     },
-,
-    render: function () {
-        this.debug.geom(line);
-    },
+
+ 
 
     setUpPause: function (){
         pause_label = this.add.text(10, 20, 'Pause', { font: '24px Arial', fill: '#fff' });
@@ -330,16 +396,15 @@ Business.HomeScene.prototype = {
             this.paused = true;
 
             // Then add the menu
-            moneyimg=this.add.sprite(10,50, 'money');
-            moneylab=this.add.text(60,50,money.toString());
-            happyimg=this.add.sprite(10,100,'happy');
-            happylab=this.add.text(60,100,happiness.toString());
-
+            this.moneyimg.visible=true;
+            this.moneylab.visible=true;
+            this.happyimg.visible=true;
+            this.happylab.visible=true;
         });
-    },
+    
     // Add a input listener that can help us return from being paused
-    this.input.onDown.add(unpause, self);
-
+    this.input.onDown.add(this.unpause, self);
+    },
     // And finally the method that handels the pause menu
     unpause: function (event){
         // Only act if paused
@@ -348,20 +413,18 @@ Business.HomeScene.prototype = {
 
 
                 // Remove the menu and the label
-                moneyimg.destroy();
-                moneylab.destroy();
-                happyimg.destroy();
-                happylab.destroy();
-
+                this.moneyimg.visible=false;
+                this.moneylab.visible=false;
+                this.happyimg.visible=false;
+                this.happylab.visible=false;
                 this.paused = false;
             }
-        }
-    },
+        },
 
 
     phonecall: function (){
-        if(!wantsToCall&&!reminded){
-            reminded=true;
+        if(!this.wantsToCall&&!this.reminded){
+            this.reminded=true;
             var agentbox = this.add.sprite(100, 100, 'rectangle3');
             agentbox.scale.setTo(0.5,0.5);
             var nstyle = { font: "16px Arial", fill: "black", wordWrap: true, wordWrapWidth: agentbox.width, align: "center" };
@@ -371,7 +434,7 @@ Business.HomeScene.prototype = {
             var agentquote =this.add.text(agentbox.x + agentbox.width/2, agentbox.y + agentbox.height/2, "", qstyle);
             agentname.anchor.set(0.5);
             agentquote.anchor.set(0.5);
-            agentname.text-agent_name;
+            agentname.text-this.agent_name;
             agentquote.text="I need to make a phone call";
             agentbox.inputEnabled=true;
             agentbox.events.onInputDown.add(function(){
@@ -386,63 +449,78 @@ Business.HomeScene.prototype = {
 
         moneyUp.inputEnabled=true;
         moneyUp.events.onInputDown.add(function(){
-            money=money+1;
-            happiness=happiness+1;
+            this.money=this.money+1;
+            this.happiness=this.happiness+1;
         });
 
-        moneybar = this.this.add.sprite(0,350,'moneyBar');
+        moneybar = this.add.sprite(0,350,'moneyBar');
         moneybar.scale.setTo(.1,.1);
 
-        moneybar.width=money*10;
+        moneybar.width=this.money*10;
 
-        happybar = this.this.add.sprite(0,370,'happyBar');
+        happybar = this.add.sprite(0,370,'happyBar');
         happybar.scale.setTo(.1,.1);
 
-        happybar.width=happiness*10;
+        happybar.width=this.happiness*10;
     },
 
     checkCollision: function (obj1, obj2){
-        if (!wantsToCall && confirm("Would you like to call " + player_name)) {
-            wantsToCall=true;
-            collisionHandler();
+        if (!this.wantsToCall && confirm("Would you like to call " + this.player_name)) {
+            this.wantsToCall=true;
+            this.collisionHandler();
         }
     },
     collisionHandler: function(obj1, obj2) {
-        var selected=dialogSelecter(happiness, money);
-        dialog(selected, 0);
+        var selected=this.dialogSelecter(this.happiness, this.money);
+        this.dialog(selected, 0);
         this.stage.backgroundColor = '#992d2d';    
     },
 
     update: function () {
-        moneybar.width=money*10;
-        happybar.width=happiness*10;
 
-        this.physics.arcade.collide(sprite, telephone, checkCollision, null, this);
 
-        this.physics.arcade.collide(sprite, layer2);
-        this.physics.arcade.collide(sprite, layer3);
+        if(this.moneybar!=null){
+            this.moneybar.width=this.money*10;
+            this.happybar.width=this.happiness*10;
 
-        sprite.body.velocity.x = 0;
-        sprite.body.velocity.y = 0;
+            if(this.moneylab!=null){
+                this.moneyimg=this.add.sprite(10,50, 'money');
+                this.moneylab=this.add.text(60,50,this.money.toString());
+                this.happyimg=this.add.sprite(10,100,'happy');
+                this.happylab=this.add.text(60,100,this.happiness.toString());
+            }
 
-        if (cursors.up.isDown)
-        {
-            sprite.body.velocity.y = -200;
         }
-        else if (cursors.down.isDown)
+ 
+        this.physics.arcade.collide(this.sprite, this.telephone, this.checkCollision, null, this);
+
+        this.physics.arcade.collide(this.sprite, this.layer2);
+        this.physics.arcade.collide(this.sprite, this.layer3);
+
+        this.sprite.body.velocity.x = 0;
+        this.sprite.body.velocity.y = 0;
+
+        if (this.cursors.up.isDown)
         {
-            sprite.body.velocity.y = 200;
+            this.sprite.body.velocity.y = -200;
+        }
+        else if (this.cursors.down.isDown)
+        {
+            this.sprite.body.velocity.y = 200;
         }
 
-        if (cursors.left.isDown)
+        if (this.cursors.left.isDown)
         {
-            sprite.body.velocity.x = -200;
+            this.sprite.body.velocity.x = -200;
         }
-        else if (cursors.right.isDown)
+        else if (this.cursors.right.isDown)
         {
-            sprite.body.velocity.x = 200;
+            this.sprite.body.velocity.x = 200;
         }
 
 
     }
+
+
+
 }
